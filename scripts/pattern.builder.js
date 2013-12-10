@@ -4,8 +4,11 @@
 ;(function ($, window, document, undefined) {
 
     var pluginDefaults = {
+        background      : '#FFFFFF',
         frameSize       : false,
         frameColor      : false,
+        columnWidth     : 5,        //If false, it will be calculated with columns
+        columns         : false,    //Only used if columnWidth is false
         canvasContent   : false
     };
 
@@ -27,6 +30,8 @@
    Plugin.prototype.init = function () {
         var canvasPattern = false;
 
+        this.setupCanvas();
+
         if (this.options.canvasContent === false) {
             canvasPattern = this.buildPattern();
         } else {
@@ -41,19 +46,26 @@
     };
 
     /**
+     * Setup the canvas context
+     */
+    Plugin.prototype.setupCanvas = function () {
+        this.canvas = this.element.getContext('2d');
+        this.canvas.translate(0.5, 0.5);
+    };
+
+    /**
      * Style the surrounding frame
      */
     Plugin.prototype.drawFrame = function (width, color) {
         var parent = $(this.element).parent(),
-            border = this.options.frameSize * 2;
+            boxWidth = parent.width() - 1,
+            boxHeight = parent.height() - 1;
 
-        $(this.element).css({
-            'border-width'  : this.options.frameSize,
-            'border-color'  : this.options.frameColor,
-            'border-style'  : 'solid',
-            'width'         : parent.width() - border,
-            'height'        : parent.height() - border,
-        });
+        this.canvas.fillStyle = this.options.background;
+        this.canvas.fillRect(0, 0, boxWidth, boxHeight);
+        this.canvas.strokeStyle = this.options.frameColor;
+        this.canvas.lineWidth = width;
+        this.canvas.strokeRect(0, 0, boxWidth, boxHeight);
     };
 
     /**
@@ -62,15 +74,17 @@
      * @return {object}     Object depicting the pattern to display.
      */
     Plugin.prototype.buildPattern = function () {
-        //
+        var pattern = {};
+
+
     };
 
     /**
      * Create Display the actual elements in the canvas.
      *
-     * @param  {object}     content
+     * @param  {object}     pattern
      */
-    Plugin.prototype.drawCanvas = function (content) {
+    Plugin.prototype.drawCanvas = function (pattern) {
 
     };
 

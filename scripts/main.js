@@ -3,8 +3,9 @@
  * @return void
  */
 $(document).ready(function(){
-    $('#canvas').patternBuilder({
+    $('#artboard > canvas').patternBuilder({
         frameSize       : 40,
-        frameColor      : '#24282F'
+        frameColor      : '#24282F',
+        background      : '#FFFFFF'
     });
 });
