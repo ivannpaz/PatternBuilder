@@ -86,6 +86,58 @@
      */
     Plugin.prototype.drawCanvas = function(pattern) {
 
+        /**
+         * Testing in progress...
+         */
+        var parent = $(this.element).parent(),
+            boxWidth = parent.width() - 1,
+            boxHeight = parent.height() - 1,
+            drawWidth = boxWidth - this.options.frameSize * 2,
+            drawHeight = boxHeight - this.options.frameSize * 2;
+
+        var area = {
+            x       : this.options.frameSize,
+            y       : this.options.frameSize,
+            width: drawWidth + this.options.frameSize,
+            height: drawHeight + this.options.frameSize
+        };
+
+        this.columns = drawWidth / this.options.columnWidth;
+
+        for (i = 0; i < this.columns; i++) {
+            this.drawColumn(area, i, this.options.columnWidth, drawHeight);
+        }
+    };
+
+    Plugin.prototype.drawColumn = function(area, offsetX, width, height) {
+
+        var color = this.getRandomColor();
+        this.canvas.fillStyle = color;
+        this.canvas.fillRect(
+            area.x + offsetX * width,
+            area.y,
+            width,
+            height
+        );
+    };
+
+    Plugin.prototype.getRandomColor = function() {
+        var r = Math.floor(Math.random() * 255) + 1,
+            g = Math.floor(Math.random() * 255) + 1,
+            b = Math.floor(Math.random() * 255) + 1;
+
+        return this.decimalToHex(r) + this.decimalToHex(g) +this.decimalToHex(b);
+    };
+
+    Plugin.prototype.decimalToHex = function(d, padding) {
+        var hex = Number(d).toString(16);
+        padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+
+        while (hex.length < padding) {
+            hex = "0" + hex;
+        }
+
+        return hex;
     };
 
     /**
