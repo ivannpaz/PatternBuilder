@@ -3,7 +3,7 @@
  */
 ;(function ($, window, document, undefined) {
 
-    var defaults = {
+    var pluginDefaults = {
         frameSize       : false,
         frameColor      : false,
         canvasContent   : false
@@ -17,7 +17,7 @@
      */
     function Plugin(element, options) {
         this.element = element;
-        this.options = $.extend({}, defaults, options);
+        this.options = $.extend({}, pluginDefaults, options);
         this.init();
     }
 
