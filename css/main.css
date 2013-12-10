@@ -1,0 +1,13 @@
+body {
+    padding: 40px 0;
+    }
+
+#artboard {
+    margin: 0 auto;
+    width: 800px;
+    height: 600px;
+    }
+
+#canvas {
+    background: #ffffff;
+    }
