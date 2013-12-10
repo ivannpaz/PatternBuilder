@@ -38,7 +38,7 @@
         }
 
         this.drawCanvas(canvasPattern);
-    }
+    };
 
     /**
      * Style the surrounding frame
@@ -54,7 +54,7 @@
             'width'         : parent.width() - border,
             'height'        : parent.height() - border,
         });
-    }
+    };
 
     /**
      * Randomly generate the pattern.
@@ -63,7 +63,7 @@
      */
     Plugin.prototype.buildPattern = function () {
         //
-    }
+    };
 
     /**
      * Create Display the actual elements in the canvas.
@@ -72,7 +72,7 @@
      */
     Plugin.prototype.drawCanvas = function (content) {
 
-    }
+    };
 
     /**
      * Attach to jQuery plugin namespace.
@@ -83,6 +83,6 @@
         return this.each(function () {
             new Plugin(this, options);
         });
-    }
+    };
 
 })(jQuery, window, document);
