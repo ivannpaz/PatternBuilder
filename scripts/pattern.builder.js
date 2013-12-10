@@ -1,5 +1,5 @@
 /**
- * Initialize Patter builder plugin.
+ * Initialize Pattern builder plugin.
  */
 ;(function ($, window, document, undefined) {
 
@@ -25,9 +25,9 @@
     }
 
     /**
-     * Bootstart
+     * Launch it
      */
-   Plugin.prototype.init = function () {
+   Plugin.prototype.init = function() {
         var canvasPattern = false;
 
         this.setupCanvas();
@@ -48,7 +48,7 @@
     /**
      * Setup the canvas context
      */
-    Plugin.prototype.setupCanvas = function () {
+    Plugin.prototype.setupCanvas = function() {
         this.canvas = this.element.getContext('2d');
         this.canvas.translate(0.5, 0.5);
     };
@@ -56,7 +56,7 @@
     /**
      * Style the surrounding frame
      */
-    Plugin.prototype.drawFrame = function (width, color) {
+    Plugin.prototype.drawFrame = function(width, color) {
         var parent = $(this.element).parent(),
             boxWidth = parent.width() - 1,
             boxHeight = parent.height() - 1;
@@ -73,7 +73,7 @@
      *
      * @return {object}     Object depicting the pattern to display.
      */
-    Plugin.prototype.buildPattern = function () {
+    Plugin.prototype.buildPattern = function() {
         var pattern = {};
 
 
@@ -84,7 +84,7 @@
      *
      * @param  {object}     pattern
      */
-    Plugin.prototype.drawCanvas = function (pattern) {
+    Plugin.prototype.drawCanvas = function(pattern) {
 
     };
 
