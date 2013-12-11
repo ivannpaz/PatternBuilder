@@ -9,6 +9,7 @@
         frameColor      : false,
         columnWidth     : 5,        //If false, it will be calculated with columns
         columns         : false,    //Only used if columnWidth is false
+        maxPieces       : 3,
         canvasContent   : false,
         colorPalette    : []
     };
@@ -34,20 +35,20 @@
 
         this.setupCanvas();
 
-        ColorRandomizer.initialize(this.options.colorPalette);
-
-        if (this.options.canvasContent === false) {
-            canvasPattern = this.buildPattern();
-        } else {
-            canvasPattern = this.parsePattern(this.options.canvasContent);
-        }
-
         if (this.options.frameSize && this.options.frameColor) {
             this.drawFrame(
                 this.options.background,
                 this.options.frameSize,
                 this.options.frameColor
             );
+        }
+
+        ColorRandomizer.initialize(this.options.colorPalette);
+
+        if (this.options.canvasContent !== false) {
+            canvasPattern = this.parsePattern(this.options.canvasContent);
+        } else {
+            canvasPattern = this.buildPattern();
         }
 
         this.drawCanvas(canvasPattern);
@@ -59,6 +60,13 @@
     Plugin.prototype.setupCanvas = function()
     {
         this.canvas = new fabric.StaticCanvas(this.element);
+
+        this.area = {
+            x: this.options.frameSize,
+            y: this.options.frameSize,
+            w: this.$element.width() - this.options.frameSize * 2,
+            h: this.$element.height() - this.options.frameSize * 2
+        };
     };
 
     /**
@@ -85,10 +93,22 @@
      * @return {object}     Object depicting the pattern to display.
      */
     Plugin.prototype.buildPattern = function() {
-        var pattern = {};
+        var pattern = [];
 
+        var columns = this.area.w / this.options.columnWidth;
+
+        for (column = 0; column < columns; column++) {
+            pattern.push(this.buildColumn(column));
+        }
 
         return pattern;
+    };
+
+    Plugin.prototype.buildColumn = function(index) {
+        var pieces = Math.floor(Math.random() * this.options.maxPieces) + 1;
+
+
+
     };
 
     /**
@@ -98,31 +118,20 @@
      */
     Plugin.prototype.drawCanvas = function(pattern)
     {
-        var parent = $(this.element).parent(),
-            boxWidth = parent.width() - 1,
-            boxHeight = parent.height() - 1,
-            drawWidth = boxWidth - this.options.frameSize * 2,
-            drawHeight = boxHeight - this.options.frameSize * 2;
+console.log(pattern);
+return;
 
-        var area = {
-            x       : this.options.frameSize,
-            y       : this.options.frameSize,
-            width: drawWidth + this.options.frameSize,
-            height: drawHeight + this.options.frameSize
-        };
+        // this.columns = drawWidth / this.options.columnWidth;
 
-        this.columns = drawWidth / this.options.columnWidth;
-
-        for (i = 0; i < this.columns; i++) {
-            this.drawColumn(
-                area, i, this.options.columnWidth, drawHeight
-            );
-        }
+        // for (i = 0; i < this.columns; i++) {
+        //     this.drawColumn(
+        //         area, i, this.options.columnWidth, drawHeight
+        //     );
+        // }
     };
 
-    Plugin.prototype.drawColumn = function(area, offsetX, width, height)
+    Plugin.prototype.drawColumn = function()
     {
-        console.log(height);
         this.canvas.add(
             new fabric.Rect({
                 left: area.x + offsetX * width,
