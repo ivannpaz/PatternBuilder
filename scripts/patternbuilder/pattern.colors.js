@@ -30,8 +30,7 @@ var ColorRandomizer = (function() {
         /**
          * Initialize the palette of colors to randomize from.
          */
-        initialize: function(colors)
-        {
+        initialize: function(colors) {
             palette = colors;
         },
 
@@ -40,8 +39,7 @@ var ColorRandomizer = (function() {
          *
          * @return {string}
          */
-        getColor: function()
-        {
+        getColor: function() {
             var color = false;
 
             while((color = palette[randomizer()]) === lastColor) ;
