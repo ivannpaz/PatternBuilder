@@ -9,7 +9,8 @@
         frameColor      : false,
         columnWidth     : 5,        //If false, it will be calculated with columns
         columns         : false,    //Only used if columnWidth is false
-        canvasContent   : false
+        canvasContent   : false,
+        colorPalette    : []
     };
 
     /**
@@ -20,6 +21,7 @@
      */
     function Plugin(element, options) {
         this.element = element;
+        this.$element = $(element);
         this.options = $.extend({}, pluginDefaults, options);
         this.init();
     }
@@ -32,6 +34,8 @@
 
         this.setupCanvas();
 
+        ColorRandomizer.initialize(this.options.colorPalette);
+
         if (this.options.canvasContent === false) {
             canvasPattern = this.buildPattern();
         } else {
@@ -39,7 +43,11 @@
         }
 
         if (this.options.frameSize && this.options.frameColor) {
-            this.drawFrame(this.options.frameSize, this.options.frameColor);
+            this.drawFrame(
+                this.options.background,
+                this.options.frameSize,
+                this.options.frameColor
+            );
         }
 
         this.drawCanvas(canvasPattern);
@@ -48,24 +56,27 @@
     /**
      * Setup the canvas context
      */
-    Plugin.prototype.setupCanvas = function() {
-        this.canvas = this.element.getContext('2d');
-        this.canvas.translate(0.5, 0.5);
+    Plugin.prototype.setupCanvas = function()
+    {
+        this.canvas = new fabric.StaticCanvas(this.element);
     };
 
     /**
      * Style the surrounding frame
      */
-    Plugin.prototype.drawFrame = function(width, color) {
-        var parent = $(this.element).parent(),
-            boxWidth = parent.width() - 1,
-            boxHeight = parent.height() - 1;
+    Plugin.prototype.drawFrame = function(background, frameSize, frameColor)
+    {
+        var rect = new fabric.Rect({
+          left: 0,
+          top: 0,
+          fill: background,
+          width: this.$element.width() - frameSize,
+          height: this.$element.height() - frameSize,
+          strokeWidth: frameSize,
+          stroke: frameColor
+        });
 
-        this.canvas.fillStyle = this.options.background;
-        this.canvas.fillRect(0, 0, boxWidth, boxHeight);
-        this.canvas.strokeStyle = this.options.frameColor;
-        this.canvas.lineWidth = width;
-        this.canvas.strokeRect(0, 0, boxWidth, boxHeight);
+        this.canvas.add(rect);
     };
 
     /**
@@ -77,6 +88,7 @@
         var pattern = {};
 
 
+        return pattern;
     };
 
     /**
@@ -84,11 +96,8 @@
      *
      * @param  {object}     pattern
      */
-    Plugin.prototype.drawCanvas = function(pattern) {
-
-        /**
-         * Testing in progress...
-         */
+    Plugin.prototype.drawCanvas = function(pattern)
+    {
         var parent = $(this.element).parent(),
             boxWidth = parent.width() - 1,
             boxHeight = parent.height() - 1,
@@ -105,39 +114,24 @@
         this.columns = drawWidth / this.options.columnWidth;
 
         for (i = 0; i < this.columns; i++) {
-            this.drawColumn(area, i, this.options.columnWidth, drawHeight);
+            this.drawColumn(
+                area, i, this.options.columnWidth, drawHeight
+            );
         }
     };
 
-    Plugin.prototype.drawColumn = function(area, offsetX, width, height) {
-
-        var color = this.getRandomColor();
-        this.canvas.fillStyle = color;
-        this.canvas.fillRect(
-            area.x + offsetX * width,
-            area.y,
-            width,
-            height
+    Plugin.prototype.drawColumn = function(area, offsetX, width, height)
+    {
+        console.log(height);
+        this.canvas.add(
+            new fabric.Rect({
+                left: area.x + offsetX * width,
+                top: area.y,
+                fill: ColorRandomizer.getColor(),
+                width: width,
+                height: height
+            })
         );
-    };
-
-    Plugin.prototype.getRandomColor = function() {
-        var r = Math.floor(Math.random() * 255) + 1,
-            g = Math.floor(Math.random() * 255) + 1,
-            b = Math.floor(Math.random() * 255) + 1;
-
-        return this.decimalToHex(r) + this.decimalToHex(g) +this.decimalToHex(b);
-    };
-
-    Plugin.prototype.decimalToHex = function(d, padding) {
-        var hex = Number(d).toString(16);
-        padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
-
-        while (hex.length < padding) {
-            hex = "0" + hex;
-        }
-
-        return hex;
     };
 
     /**
