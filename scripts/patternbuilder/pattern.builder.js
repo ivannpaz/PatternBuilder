@@ -47,12 +47,14 @@
         ColorRandomizer.initialize(this.options.colorPalette);
 
         if (this.options.canvasContent !== false) {
-            canvasPattern = this.parsePattern(this.options.canvasContent);
+            canvasPattern = this.options.canvasContent;
         } else {
             canvasPattern = this.buildPattern();
         }
 
         this.drawCanvas(canvasPattern);
+
+        $(this.$element).data('canvas-content', JSON.stringify(canvasPattern));
     };
 
     /**
@@ -89,6 +91,23 @@
     };
 
     /**
+     * Parse a json encoded pattern
+     *
+     * @return {object}     Object depicting the pattern to display.
+     */
+    Plugin.prototype.parsePattern = function(hash) {
+        var pattern = [];
+
+        var columns = this.area.w / this.options.columnWidth;
+
+        for (column = 0; column < columns; column++) {
+            pattern.push(this.buildColumn(column));
+        }
+
+        return pattern;
+    };
+
+    /**
      * Randomly generate the pattern.
      *
      * @return {object}     Object depicting the pattern to display.
@@ -110,7 +129,7 @@
     }
 
     Plugin.prototype.buildColumn = function(index) {
-        var pieces = Math.floor(Math.random() * this.options.maxPieces) + 1,
+        var pieces = Math.floor(Math.random() * this.options.maxBlocks) + 1,
             blocks = [];
 
         if (pieces === 1) {
@@ -135,7 +154,7 @@
     Plugin.prototype.buildBlock = function(blockSize, color) {
         var height = (this.area.h * blockSize) / 100;
         return {
-            height    : height,
+            height  : height,
             color   : ColorRandomizer.getColor()
         };
     };
