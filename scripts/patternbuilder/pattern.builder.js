@@ -9,7 +9,8 @@
         frameColor      : false,
         columnWidth     : 5,        //If false, it will be calculated with columns
         columns         : false,    //Only used if columnWidth is false
-        maxPieces       : 3,
+        maxBlocks       : 3,
+        minBlockSize    : 30,
         canvasContent   : false,
         colorPalette    : []
     };
@@ -121,7 +122,7 @@
             randomSize;
 
         for(var i = 1; i < pieces; i++) {
-            randomSize = Math.floor(Math.random() * columnSize) + 1;
+            randomSize = random(this.options.minBlockSize, columnSize);
             blocks.push(this.buildBlock(randomSize));
             columnSize -= randomSize;
         }
