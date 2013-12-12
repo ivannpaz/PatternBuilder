@@ -120,7 +120,7 @@
         var columnSize = 100,
             randomSize;
 
-        for(i = 1; i < pieces; i++) {
+        for(var i = 1; i < pieces; i++) {
             randomSize = Math.floor(Math.random() * columnSize) + 1;
             blocks.push(this.buildBlock(randomSize));
             columnSize -= randomSize;
@@ -132,11 +132,10 @@
     };
 
     Plugin.prototype.buildBlock = function(blockSize, color) {
-        //blockSize is %, calculate the actual height from
-        //this.area.h
+        var height = (this.area.h * blockSize) / 100;
         return {
-            size: blockSize,
-            color: color
+            height    : height,
+            color   : ColorRandomizer.getColor()
         };
     };
 
@@ -147,39 +146,31 @@
      */
     Plugin.prototype.drawCanvas = function(pattern)
     {
-        console.log(pattern);
-        for (var column in pattern) {
-            // var content = '', counter = 0;
-            // for (var block in column) {
-            //     content += ('[' + block.size + '] ');
-            //     counter += block.size;
-            // }
-            // content += (' = ' + counter);
-            //console.log(column);
+        for (var i = 0; i < pattern.length; i++) {
+            this.drawColumn(
+                i,
+                pattern[i],
+                this.area
+            );
         }
-
-return;
-
-        // this.columns = drawWidth / this.options.columnWidth;
-
-        // for (i = 0; i < this.columns; i++) {
-        //     this.drawColumn(
-        //         area, i, this.options.columnWidth, drawHeight
-        //     );
-        // }
     };
 
-    Plugin.prototype.drawColumn = function()
+    Plugin.prototype.drawColumn = function(columnIndex, column, area)
     {
-        this.canvas.add(
-            new fabric.Rect({
-                left: area.x + offsetX * width,
-                top: area.y,
-                fill: ColorRandomizer.getColor(),
-                width: width,
-                height: height
-            })
-        );
+        var heightOffset = 0;
+        for (var i = 0; i < column.length; i++) {
+            this.canvas.add(
+                new fabric.Rect({
+                    left: area.x + columnIndex * this.options.columnWidth,
+                    top: area.y + heightOffset,
+                    fill: column[i].color,
+                    width: this.options.columnWidth,
+                    height: column[i].height
+                })
+            );
+
+            heightOffset += column[i].height;
+        }
     };
 
     /**
