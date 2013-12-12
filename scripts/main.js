@@ -11,7 +11,11 @@ $(document).ready(function() {
         ['#D0DF82', '#ECD026', '#FD4F4E', '#A11931', '#2A1B14']
     ];
 
-    var randomPaletteIndex = Math.floor(Math.random() * colorPalettes.length);
+    var getRandomPalette = function() {
+        return colorPalettes[
+            Math.floor(Math.random() * colorPalettes.length)
+        ];
+    };
 
     var $drawingCanvas = $('#artboard > canvas'),
         canvasContent = false,
@@ -27,7 +31,7 @@ $(document).ready(function() {
         background      : '#FFFFFF',
         columnWidth     : 20,
         maxBlocks       : 3,
-        colorPalette    : colorPalettes[randomPaletteIndex],
+        colorPalette    : getRandomPalette(),
         canvasContent   : canvasContent
     };
 
@@ -36,7 +40,13 @@ $(document).ready(function() {
 
     $('#artboard a').on('click', function(e) {
         $drawingCanvas.patternBuilder(
-            $.extend(params, {canvasContent: false})
+            $.extend(
+                params,
+                {
+                    canvasContent: false,
+                    colorPalette: getRandomPalette()
+                }
+            )
         );
         document.location.hash = $drawingCanvas.data('canvas-content');
     });
