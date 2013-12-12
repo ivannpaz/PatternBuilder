@@ -31,14 +31,13 @@ $(document).ready(function() {
         canvasContent   : canvasContent
     };
 
+    $drawingCanvas.patternBuilder(params);
+    document.location.hash = $drawingCanvas.data('canvas-content');
+
     $('#artboard a').on('click', function(e) {
         $drawingCanvas.patternBuilder(
             $.extend(params, {canvasContent: false})
         );
         document.location.hash = $drawingCanvas.data('canvas-content');
     });
-
-    $drawingCanvas.patternBuilder(params);
-    document.location.hash = $drawingCanvas.data('canvas-content');
-
 });
