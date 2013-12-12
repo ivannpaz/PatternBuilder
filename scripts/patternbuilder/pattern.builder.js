@@ -125,11 +125,24 @@
         return pattern;
     };
 
+    /**
+     * Generate a random integer with lower and upper bounds.
+     *
+     * @param  {integer} min
+     * @param  {integer} max
+     *
+     * @return {integer}
+     */
     function random(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    Plugin.prototype.buildColumn = function(index) {
+    /**
+     * Build a column with random blocks inside.
+     *
+     * @return {array}
+     */
+    Plugin.prototype.buildColumn = function() {
         var pieces = Math.floor(Math.random() * this.options.maxBlocks) + 1,
             blocks = [];
 
@@ -152,7 +165,13 @@
         return blocks;
     };
 
-    Plugin.prototype.buildBlock = function(blockSize, color) {
+    /**
+     * Build an inner block with a given height% and random color.
+     *
+     * @param  {int}    blockSize
+     * @return {object}
+     */
+    Plugin.prototype.buildBlock = function(blockSize) {
         var height = (this.area.h * blockSize) / 100;
         return {
             height  : height,
@@ -161,7 +180,7 @@
     };
 
     /**
-     * Create Display the actual elements in the canvas.
+     * Display each column and blocks onto the canvas.
      *
      * @param  {object}     pattern
      */
@@ -176,6 +195,13 @@
         }
     };
 
+    /**
+     * Draw a column composed by 1 or more blocks onto the cannvas.
+     *
+     * @param  {integer}  columnIndex
+     * @param  {array}    column
+     * @param  {object}   area
+     */
     Plugin.prototype.drawColumn = function(columnIndex, column, area)
     {
         var heightOffset = 0;
