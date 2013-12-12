@@ -32,9 +32,10 @@
      * Launch it
      */
    Plugin.prototype.init = function() {
-        var canvasPattern = false;
 
         this.setupCanvas();
+
+        ColorRandomizer.initialize(this.options.colorPalette);
 
         if (this.options.frameSize && this.options.frameColor) {
             this.drawFrame(
@@ -44,7 +45,7 @@
             );
         }
 
-        ColorRandomizer.initialize(this.options.colorPalette);
+        var canvasPattern = false;
 
         if (this.options.canvasContent !== false) {
             canvasPattern = this.options.canvasContent;
