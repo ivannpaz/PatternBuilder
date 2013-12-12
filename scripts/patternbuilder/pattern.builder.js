@@ -104,11 +104,40 @@
         return pattern;
     };
 
+    function random(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     Plugin.prototype.buildColumn = function(index) {
-        var pieces = Math.floor(Math.random() * this.options.maxPieces) + 1;
+        var pieces = Math.floor(Math.random() * this.options.maxPieces) + 1,
+            blocks = [];
 
+        if (pieces === 1) {
+            blocks.push(this.buildBlock(100));
+            return blocks;
+        }
 
+        var columnSize = 100,
+            randomSize;
 
+        for(i = 1; i < pieces; i++) {
+            randomSize = Math.floor(Math.random() * columnSize) + 1;
+            blocks.push(this.buildBlock(randomSize));
+            columnSize -= randomSize;
+        }
+
+        blocks.push(this.buildBlock(columnSize));
+
+        return blocks;
+    };
+
+    Plugin.prototype.buildBlock = function(blockSize, color) {
+        //blockSize is %, calculate the actual height from
+        //this.area.h
+        return {
+            size: blockSize,
+            color: color
+        };
     };
 
     /**
@@ -118,7 +147,17 @@
      */
     Plugin.prototype.drawCanvas = function(pattern)
     {
-console.log(pattern);
+        console.log(pattern);
+        for (var column in pattern) {
+            // var content = '', counter = 0;
+            // for (var block in column) {
+            //     content += ('[' + block.size + '] ');
+            //     counter += block.size;
+            // }
+            // content += (' = ' + counter);
+            //console.log(column);
+        }
+
 return;
 
         // this.columns = drawWidth / this.options.columnWidth;
