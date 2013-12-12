@@ -7,12 +7,12 @@ $(document).ready(function(){
         frameSize       : 40,
         frameColor      : '#24282F',
         background      : '#FFFFFF',
-        columnWidth     : 40,
-        maxPieces       : 4,
+        columnWidth     : 5,
+        maxPieces       : 3,
         colorPalette    : [
-            '#C6382A', '#B9CE31',
-            '#3F6F01', '#FFD876',
-            '#F49924'
+            '#69370B', '#F2B66C',
+            '#E06011', '#FCA71E',
+            '#004400'
         ]
     });
 });
