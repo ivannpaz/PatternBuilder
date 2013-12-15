@@ -21,7 +21,8 @@
      * @param {dom}     element     Drawing board
      * @param {object}  options     Plugin options
      */
-    function Plugin(element, options) {
+    function Plugin(element, options)
+    {
         this.element = element;
         this.$element = $(element);
         this.options = $.extend({}, pluginDefaults, options);
@@ -31,8 +32,8 @@
     /**
      * Launch it
      */
-   Plugin.prototype.init = function() {
-
+   Plugin.prototype.init = function()
+   {
         this.setupCanvas();
 
         ColorRandomizer.initialize(this.options.colorPalette);
@@ -64,7 +65,6 @@
     Plugin.prototype.setupCanvas = function()
     {
         this.canvas = new fabric.StaticCanvas(this.element);
-
         this.area = {
             x: this.options.frameSize,
             y: this.options.frameSize,
@@ -96,7 +96,8 @@
      *
      * @return {object}     Object depicting the pattern to display.
      */
-    Plugin.prototype.parsePattern = function(hash) {
+    Plugin.prototype.parsePattern = function(hash)
+    {
         var pattern = [];
 
         var columns = this.area.w / this.options.columnWidth;
@@ -113,7 +114,8 @@
      *
      * @return {object}     Object depicting the pattern to display.
      */
-    Plugin.prototype.buildPattern = function() {
+    Plugin.prototype.buildPattern = function()
+    {
         var pattern = [];
 
         var columns = this.area.w / this.options.columnWidth;
@@ -133,7 +135,8 @@
      *
      * @return {integer}
      */
-    function random(min, max) {
+    function random(min, max)
+    {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -142,7 +145,8 @@
      *
      * @return {array}
      */
-    Plugin.prototype.buildColumn = function() {
+    Plugin.prototype.buildColumn = function()
+    {
         var pieces = Math.floor(Math.random() * this.options.maxBlocks) + 1,
             blocks = [];
 
@@ -171,7 +175,8 @@
      * @param  {int}    blockSize
      * @return {object}
      */
-    Plugin.prototype.buildBlock = function(blockSize) {
+    Plugin.prototype.buildBlock = function(blockSize)
+    {
         var height = (this.area.h * blockSize) / 100;
         return {
             height  : height,

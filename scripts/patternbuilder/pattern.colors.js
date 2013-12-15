@@ -57,7 +57,9 @@ var ColorRandomizer = (function() {
         getColor: function() {
             var color = false;
 
-            while((color = palette[randomizer()]) === lastColor) ;
+            do {
+                color = palette[randomizer()];
+            } while(color === lastColor) ;
 
             updateDelivered(color);
 
