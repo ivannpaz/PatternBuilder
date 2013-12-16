@@ -49,7 +49,7 @@
         var canvasPattern = false;
 
         if (this.options.canvasContent !== false) {
-            canvasPattern = this.options.canvasContent;
+            canvasPattern = this.parsePattern(this.options.canvasContent);
         } else {
             canvasPattern = this.buildPattern();
         }
@@ -98,15 +98,7 @@
      */
     Plugin.prototype.parsePattern = function(hash)
     {
-        var pattern = [];
-
-        var columns = this.area.w / this.options.columnWidth;
-
-        for (column = 0; column < columns; column++) {
-            pattern.push(this.buildColumn(column));
-        }
-
-        return pattern;
+        return this.options.canvasContent;
     };
 
     /**
