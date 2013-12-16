@@ -3,19 +3,18 @@
  */
 ;(function ($, window, document, undefined) {
 
-    var pluginName = 'patternBuilder';
-
-    var pluginDefaults = {
-        background      : '#FFFFFF',
-        frameSize       : false,
-        frameColor      : false,
-        columnWidth     : 5,        //If false, it will be calculated with columns
-        columns         : false,    //Only used if columnWidth is false
-        maxBlocks       : 3,
-        minBlockSize    : 30,
-        canvasContent   : false,
-        colorPalette    : []
-    };
+    var pluginName = 'patternBuilder',
+        pluginDefaults = {
+            background      : '#FFFFFF',
+            frameSize       : false,
+            frameColor      : false,
+            columnWidth     : 5,        //If false, it will be calculated with columns
+            columns         : false,    //Only used if columnWidth is false
+            maxBlocks       : 3,
+            minBlockSize    : 30,
+            canvasContent   : false,
+            colorPalette    : []
+        };
 
     /**
      * Constructor.
